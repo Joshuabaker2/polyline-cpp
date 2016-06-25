@@ -5,15 +5,19 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
         src/Polyline.cpp
-        src/Polyline.h)
+        src/Polyline.h
+        src/SimplePolyline.cpp
+        src/SimplePolyline.h)
 
 set(TEST_FILES
         tests/PolylineTest.cpp
-        tests/PolylineTest.h)
+        tests/PolylineTest.h
+        tests/SimplePolylineTest.cpp
+        tests/SimplePolylineTest.h)
 
 set(TEST_FILES ${TEST_FILES} ${SOURCE_FILES})
 
-add_executable(polyline_test ${TEST_FILES})
+add_executable(polyline_test tests/MainTest.cpp ${TEST_FILES})
 
 ##################
 # TEST FRAMEWORK #

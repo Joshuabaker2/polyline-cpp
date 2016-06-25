@@ -12,8 +12,8 @@ class Polyline {
  public:
   Polyline();
   Polyline(int precision);
-  void encode(GPSCoordinate *coordinates, char *output);
-  void decode(char *str, GPSCoordinate *output);
+  void encode(GPSCoordinate coordinates[], int num_coords, char *output);
+  void decode(char *str, GPSCoordinate output[]);
 
  private:
   int _precision = 5;

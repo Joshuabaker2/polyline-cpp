@@ -11,8 +11,8 @@ class SimplePolyline {
  public:
   SimplePolyline();
   SimplePolyline(int precision);
-  void encode(float *coordinates, char *output);
-  void decode(char *str, float *output);
+  void encode(float coordinates[][2], int num_coords, char *output);
+  void decode(char *str, float output[][2]);
 
  private:
   int _precision = 5;

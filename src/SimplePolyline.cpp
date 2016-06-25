@@ -19,15 +19,14 @@ SimplePolyline::SimplePolyline() { }
  *  coordinates[1] = longitude
  * @returns char*
  */
-void SimplePolyline::encode(float *coordinates, char *output) {
-  _encodeSingleCoord(coordinates[0], output);
-  _encodeSingleCoord(coordinates[1], output);
+void SimplePolyline::encode(float coordinates[][2], int num_coords, char *output) {
+  _encodeSingleCoord(coordinates[0][0], output);
+  _encodeSingleCoord(coordinates[0][1], output);
 
-  for (int i = 2; !isEmpty(coordinates[i]); i += 2) {
-    _encodeSingleCoord(coordinates[i] - coordinates[i - 2], output);
-    _encodeSingleCoord(coordinates[i + 1] - coordinates[i - 1], output);
+  for (int i = 1; i < num_coords; i++) {
+    _encodeSingleCoord(coordinates[i][0] - coordinates[i - 1][0], output);
+    _encodeSingleCoord(coordinates[i][1] - coordinates[i - 1][1], output);
   }
-
 }
 
 
@@ -42,7 +41,7 @@ void SimplePolyline::encode(float *coordinates, char *output) {
  *
  * @see https://github.com/Project-OSRM/osrm-frontend/blob/master/WebContent/routing/OSRM.RoutingGeometry.js
  */
-void SimplePolyline::decode(char *str, float *output) {
+void SimplePolyline::decode(char *str, float output[][2]) {
   int32_t index = 0, shift = 0, result = 0;
   float latlng[2] = {0, 0};
   char byte = '\0';
@@ -57,7 +56,7 @@ void SimplePolyline::decode(char *str, float *output) {
         shift += 5;
       } while (byte >= 0x20); // 0x20 is blank, numbers below are garbage
       latlng[j] += (((result & 1) != 0 ? ~(result >> 1) : (result >> 1)));
-      output[2 * i + j] = latlng[j] / _factor;
+      output[i][j] = latlng[j] / _factor;
     }
   }
 }

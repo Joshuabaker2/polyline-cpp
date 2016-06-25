@@ -4,110 +4,117 @@
 
 #include "SimplePolylineTest.h"
 
-TEST_F(PolylineTest, TestEncodeDecode) {
-  static const int bufferSize = 10;
+TEST_F(SimplePolylineTest, TestSimpleEncodeDecode) {
+  static const int buffer_size = 10;
+  static const int num_coords = 1;
   static const int precision = 5;
 
-  char encoded[bufferSize] = {0};
-  float coordinates[2] = {41.75368, -87.97330};
+  char encoded[buffer_size] = {0};
 
-  Polyline polyline(precision);
-  polyline.encode(coordinates, encoded);
+  float coordinates[num_coords][2] = {{41.75368, -87.97330}};
 
-  float decodedCoordinates[10];
+  SimplePolyline polyline(precision);
+  polyline.encode(coordinates, num_coords, encoded);
+
+  float decodedCoordinates[num_coords][2];
   polyline.decode(encoded, decodedCoordinates);
 
-  EXPECT_FLOAT_EQ(41.75368, decodedCoordinates[0]);
-  EXPECT_FLOAT_EQ(-87.97330, decodedCoordinates[1]);
+  EXPECT_FLOAT_EQ(41.75368, decodedCoordinates[0][0]);
+  EXPECT_FLOAT_EQ(-87.97330, decodedCoordinates[0][1]);
 }
 
 // Encoded string generated from https://developers.google.com/maps/documentation/utilities/polylineutility
-TEST_F(PolylineTest, TestDecodeFromGoogleMapAPI) {
-  char *encoded = (char*)"zh_pChhmfE";
-  float decodedCoordinates[10];
+TEST_F(SimplePolylineTest, TestSimpleDecodeFromGoogleMapAPI) {
+  static const int num_coords = 1;
 
-  Polyline polyline;
+  char *encoded = (char*)"zh_pChhmfE";
+  float decodedCoordinates[num_coords][2];
+
+  SimplePolyline polyline;
 
   polyline.decode(encoded, decodedCoordinates);
-  EXPECT_FLOAT_EQ(-23.75838, decodedCoordinates[0]);
-  EXPECT_FLOAT_EQ(-32.67733, decodedCoordinates[1]);
+  EXPECT_FLOAT_EQ(-23.75838, decodedCoordinates[0][0]);
+  EXPECT_FLOAT_EQ(-32.67733, decodedCoordinates[0][1]);
 }
 
-TEST_F(PolylineTest, TestEncodeDecodeLowPrecision) {
-  static const int bufferSize = 10;
+TEST_F(SimplePolylineTest, TestSimpleEncodeDecodeLowPrecision) {
+  static const int buffer_size = 10;
+  static const int num_coords = 1;
   static const int precision = 3;
 
-  char encoded[bufferSize] = {0};
-  float coordinates[2] = {41.75368, -87.97330};
+  char encoded[buffer_size] = {0};
+  float coordinates[num_coords][2] = {{41.75368, -87.97330}};
 
-  Polyline polyline(precision);
+  SimplePolyline polyline(precision);
 
-  polyline.encode(coordinates, encoded);
+  polyline.encode(coordinates, num_coords, encoded);
 
-  float decodedCoordinates[10];
+  float decodedCoordinates[num_coords][2];
   polyline.decode(encoded, decodedCoordinates);
 
-  EXPECT_FLOAT_EQ(41.753, decodedCoordinates[0]);
-  EXPECT_FLOAT_EQ(-87.973, decodedCoordinates[1]);
+  EXPECT_FLOAT_EQ(41.753, decodedCoordinates[0][0]);
+  EXPECT_FLOAT_EQ(-87.973, decodedCoordinates[0][1]);
 }
 
-TEST_F(PolylineTest, TestDecode) {
-  static const int bufferSize = 10;
-  char encoded[bufferSize] = {0};
-  float coordinates[2] = {64.12345, -12.91827};
+TEST_F(SimplePolylineTest, TestSimpleDecode) {
+  static const int buffer_size = 10;
+  static const int num_coords = 1;
 
-  Polyline polyline;
+  char encoded[buffer_size] = {0};
+  float coordinates[num_coords][2] = {{64.12345, -12.91827}};
 
-  polyline.encode(coordinates, encoded);
+  SimplePolyline polyline;
 
-  float decodedCoordinates[10];
+  polyline.encode(coordinates, num_coords, encoded);
+
+  float decodedCoordinates[num_coords][2];
   polyline.decode(encoded, decodedCoordinates);
 
-  EXPECT_FLOAT_EQ(64.12345, decodedCoordinates[0]);
-  EXPECT_FLOAT_EQ(-12.91827, decodedCoordinates[1]);
+  EXPECT_FLOAT_EQ(64.12345, decodedCoordinates[0][0]);
+  EXPECT_FLOAT_EQ(-12.91827, decodedCoordinates[0][1]);
 }
 
 // Encoded string generated from https://developers.google.com/maps/documentation/utilities/polylineutility
-TEST_F(PolylineTest, TripleDecode) {
+TEST_F(SimplePolylineTest, TripleSimpleDecode) {
   static const int precision = 5;
-  Polyline polyline(precision);
-  float decodedCoordinates[10];
+  static const int num_coords = 3;
+
+  SimplePolyline polyline(precision);
+
+  float decodedCoordinates[num_coords][2];
+
   char* encoded = (char*)"_nq~F|}bvOtnGx{DppBq|H";
   polyline.decode(encoded, decodedCoordinates);
 
-  EXPECT_FLOAT_EQ(41.87376, decodedCoordinates[0]);
-  EXPECT_FLOAT_EQ(-87.67471, decodedCoordinates[1]);
+  EXPECT_FLOAT_EQ(41.87376, decodedCoordinates[0][0]);
+  EXPECT_FLOAT_EQ(-87.67471, decodedCoordinates[0][1]);
 
-  EXPECT_FLOAT_EQ(41.83029, decodedCoordinates[2]);
-  EXPECT_FLOAT_EQ(-87.70492, decodedCoordinates[3]);
+  EXPECT_FLOAT_EQ(41.83029, decodedCoordinates[1][0]);
+  EXPECT_FLOAT_EQ(-87.70492, decodedCoordinates[1][1]);
 
-  EXPECT_FLOAT_EQ(41.81212, decodedCoordinates[4]);
-  EXPECT_FLOAT_EQ(-87.65411, decodedCoordinates[5]);
+  EXPECT_FLOAT_EQ(41.81212, decodedCoordinates[2][0]);
+  EXPECT_FLOAT_EQ(-87.65411, decodedCoordinates[2][1]);
 }
 
-TEST_F(PolylineTest, TripleEncodeDecode) {
-  static const int bufferSize = 32;
-  char encoded[bufferSize] = {0};
+TEST_F(SimplePolylineTest, TripSimpleleEncodeDecode) {
+  static const int buffer_size = 32;
+  static const int num_coords = 3;
+  char encoded[buffer_size] = {0};
 
-  Polyline polyline;
+  SimplePolyline polyline;
 
-  float coordinates[6] = {41.87376, -87.67471, 41.83029, -87.70492, 41.81212, -87.65411};
-  polyline.encode(coordinates, encoded);
+  float coordinates[num_coords][2] = {{41.87376, -87.67471}, {41.83029, -87.70492}, {41.81212, -87.65411}};
+  polyline.encode(coordinates, num_coords, encoded);
 
-  float decodedCoordinates[10];
+  float decodedCoordinates[num_coords][2];
   polyline.decode(encoded, decodedCoordinates);
 
-  EXPECT_NEAR(41.87376, decodedCoordinates[0], 0.000015);
-  EXPECT_NEAR(-87.67471, decodedCoordinates[1], 0.000015);
+  EXPECT_FLOAT_EQ(41.87376, decodedCoordinates[0][0]);
+  EXPECT_FLOAT_EQ(-87.67471, decodedCoordinates[0][1]);
 
-  EXPECT_NEAR(41.83029, decodedCoordinates[2], 0.000015);
-  EXPECT_NEAR(-87.70492, decodedCoordinates[3], 0.000015);
+  EXPECT_FLOAT_EQ(41.83029, decodedCoordinates[1][0]);
+  EXPECT_FLOAT_EQ(-87.70492, decodedCoordinates[1][1]);
 
-  EXPECT_NEAR(41.81212, decodedCoordinates[4], 0.000015);
-  EXPECT_NEAR(-87.65411, decodedCoordinates[5], 0.000015);
-}
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+  EXPECT_FLOAT_EQ(41.81212, decodedCoordinates[2][0]);
+  EXPECT_FLOAT_EQ(-87.65411, decodedCoordinates[2][1]);
 }

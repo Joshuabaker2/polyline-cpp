@@ -19,15 +19,14 @@ Polyline::Polyline() { }
  *  coordinates[1] = longitude
  * @returns char*
  */
-void Polyline::encode(GPSCoordinate *gpsCoordinates, char *output) {
+void Polyline::encode(GPSCoordinate gpsCoordinates[], int num_coords, char *output) {
   _encodeSingleCoord(gpsCoordinates[0].latitude(), output);
   _encodeSingleCoord(gpsCoordinates[0].longitude(), output);
 
-  for (int i = 1; !gpsCoordinates[i].isEmpty(); i++) {
+  for (int i = 1; i < num_coords && !gpsCoordinates[i].isEmpty(); i++) {
     _encodeSingleCoord(gpsCoordinates[i].latitude() - gpsCoordinates[i - 1].latitude(), output);
-    _encodeSingleCoord(gpsCoordinates[i].longitude() - gpsCoordinates[i - 1].latitude(), output);
+    _encodeSingleCoord(gpsCoordinates[i].longitude() - gpsCoordinates[i - 1].longitude(), output);
   }
-
 }
 
 
@@ -42,7 +41,7 @@ void Polyline::encode(GPSCoordinate *gpsCoordinates, char *output) {
  *
  * @see https://github.com/Project-OSRM/osrm-frontend/blob/master/WebContent/routing/OSRM.RoutingGeometry.js
  */
-void Polyline::decode(char *str, GPSCoordinate *output) {
+void Polyline::decode(char *str, GPSCoordinate output[]) {
   int32_t index = 0, shift = 0, result = 0;
   float latlng[2] = {0, 0};
   char byte = '\0';
@@ -52,7 +51,7 @@ void Polyline::decode(char *str, GPSCoordinate *output) {
       shift = result = 0;
       byte = '\0';
       do {
-        byte = str[index++] - 63;
+        byte = (char)(str[index++] - 63);
         result |= (int32_t)(byte & 0x1f) << (int32_t) shift;
         shift += 5;
       } while (byte >= 0x20); // 0x20 is blank, numbers below are garbage

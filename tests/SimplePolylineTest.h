@@ -8,7 +8,7 @@
 #include <gtest/gtest.h>
 #include "../src/SimplePolyline.h"
 
-class PolylineTest : public testing::Test {
+class SimplePolylineTest : public testing::Test {
 
 };
 
