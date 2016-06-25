@@ -48,17 +48,6 @@ class SimplePolyline {
     return len;
   }
 
-  inline int dabs(float _a) {
-    return _a > 0 ? _a : -_a;
-  }
-
-  inline int areEqual(float a, float b, float epsilon) {
-    return dabs(a - b) < epsilon;
-  }
-
-  inline int areEqual(float a, float b) {
-    return dabs(a - b) < 0.000001;
-  }
 };
 
 

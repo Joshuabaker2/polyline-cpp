@@ -31,7 +31,7 @@ void SimplePolyline::encode(float coordinates[][2], int num_coords, char *output
 
 
 /** TODO documentation
- * Decodes to a [latitude, longitude] coordinates array.
+ * Decodes to a [[latitude, longitude]] coordinates array.
  *
  * This is adapted from the implementation in Project-OSRM.
  *
