@@ -1,6 +1,7 @@
 # polyline-cpp
 A polyline encoder/decoder for GPS coordinates. No dynamic memory allocation, so it's safe for embedded programming!
 
+To see how polyline encoding/decoding works, check out Google's [Interactive Polyline Encoder Utility](https://developers.google.com/maps/documentation/utilities/polylineutility).
 ## How To Build
 This project uses CMake to build. For a quick start, simply run `./setup.sh` in the root directory.
 
