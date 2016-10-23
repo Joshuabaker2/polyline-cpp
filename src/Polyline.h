@@ -1,9 +1,12 @@
-/*
- * Created by joshuabaker2 on 26/03/16.
-*/
+// Copyright 2016, Josh Baker.
+// All rights reserved.
+//
+// Author: joshuabaker2@gmail.com (Josh Baker)
+//
+// The Polyline Class
 
-#ifndef MCU_POLYLINE_H
-#define MCU_POLYLINE_H
+#ifndef POLYLINE_H_
+#define POLYLINE_H_
 
 #include <stdint.h>
 #include "datatypes/GPSCoordinate.h"
@@ -11,15 +14,15 @@
 class Polyline {
  public:
   Polyline();
-  Polyline(int precision);
-  void encode(GPSCoordinate coordinates[], int num_coords, char *output);
-  void decode(char *str, GPSCoordinate output[]);
+  explicit Polyline(int precision);
+  void encode(GPSCoordinate coordinates[], int num_coords, char *output_str);
+  int decode(char *str, GPSCoordinate decoded_coords[]);
 
  private:
   int _precision = 5;
   float _factor = power(10, _precision);
 
-  void _encodeSingleCoord(float coordinate, char *output);
+  void encodeSingleCoord(float coordinate, char *output_str);
 
   /*
   * @param: base and exponent
@@ -45,11 +48,9 @@ class Polyline {
  */
   inline int strlen(char *str) {
     int len;
-    for (len = 0; str[len]; len++);
+    for (len = 0; str[len]; len++) {}
     return len;
   }
-
 };
 
-
-#endif //MCU_POLYLINE_H
+#endif  // POLYLINE_H_

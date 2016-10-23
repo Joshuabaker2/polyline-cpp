@@ -25,7 +25,6 @@ add_executable(polyline_test tests/MainTest.cpp ${TEST_FILES})
 
 # Add google test framework
 add_subdirectory(dependencies/googletest gtest)
-include_directories(gtest STATIC devtools/googletest/include )
 
 set(TEST_FRAMEWORK_LIBS gtest)
 

@@ -1,6 +1,9 @@
+// Copyright 2016, Josh Baker.
+// All rights reserved.
 //
-// Created by josh on 12/04/16.
+// Author: joshuabaker2@gmail.com (Josh Baker)
 //
+// The Polyline Class Tests using gtest
 
 #ifndef MCU_POLYLINETEST_H
 #define MCU_POLYLINETEST_H

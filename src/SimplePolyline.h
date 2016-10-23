@@ -1,24 +1,28 @@
-/*
- * Created by joshuabaker2 on 26/03/16.
-*/
+// Copyright 2016, Josh Baker.
+// All rights reserved.
+//
+// Author: joshuabaker2@gmail.com (Josh Baker)
+//
+// The SimplePolyline Class
 
-#ifndef MCU_POLYLINE_H
-#define MCU_POLYLINE_H
+
+#ifndef SIMPLEPOLYLINE_H_
+#define SIMPLEPOLYLINE_H_
 
 #include <stdint.h>
 
 class SimplePolyline {
  public:
   SimplePolyline();
-  SimplePolyline(int precision);
-  void encode(float coordinates[][2], int num_coords, char *output);
-  void decode(char *str, float output[][2]);
+  explicit SimplePolyline(int precision);
+  void encode(float coordinates[][2], int num_coords, char *output_str);
+  int decode(char *str, float output[][2]);
 
  private:
   int _precision = 5;
   float _factor = power(10, _precision);
 
-  void _encodeSingleCoord(float coordinate, char *output);
+  void encodeSingleCoord(float coordinate, char *output_str);
 
   /*
   * @param: base and exponent
@@ -27,7 +31,7 @@ class SimplePolyline {
   inline float power(float base, int exponent) {
     float r = 1.0;
     if (exponent < 0) {
-      base = 1.0 / base;
+      base = r / base;
       exponent = -exponent;
     }
     while (exponent) {
@@ -42,13 +46,11 @@ class SimplePolyline {
 /**
  * Reimplementing a basic strlen because we don't want to include string.h in an embedded system.
  */
-  inline int strlen(char *str) {
-    int len;
-    for (len = 0; str[len]; len++);
+  inline int32_t strlen(char *str) {
+    int32_t len = 0;
+    while (str[++len]) {}
     return len;
   }
-
 };
 
-
-#endif //MCU_POLYLINE_H
+#endif  // SIMPLEPOLYLINE_H_

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! type cmake > /dev/null; then
-        echo >&2 "ERROR: Cmake is not installed.  Please install (read the READ$
+        echo >&2 "ERROR: Cmake is not installed.  Please install (read the README)"
 fi
 
 mkdir build

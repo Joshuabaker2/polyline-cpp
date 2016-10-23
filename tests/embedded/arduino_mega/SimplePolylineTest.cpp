@@ -1,8 +1,17 @@
+// Copyright 2016, Josh Baker.
+// All rights reserved.
 //
-// Created by joshuabaker2 on 12/04/16.
+// Author: joshuabaker2@gmail.com (Josh Baker)
 //
+// SimplePolylineTest.cpp for Arduino
 
-#include "SimplePolyline.h"
+#if ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+#endif
+
+#include "../../../src/SimplePolyline.h"
 
 int tests_failed = 0;
 int tests_succeeded = 0;
@@ -25,13 +34,12 @@ inline void EXPECT_FLOAT_EQ(float a, float b) {
 }
 
 void setup() {
-  Serial.begin(57600);
   TestSimpleDecode();
-//  TestSimpleDecodeFromGoogleMapAPI();
-//  TestSimpleEncodeDecodeLowPrecision();
-//  TestSimpleDecode();
-//  TripleSimpleDecode();
-//  TripSimpleleEncodeDecode();
+  TestSimpleDecodeFromGoogleMapAPI();
+  TestSimpleEncodeDecodeLowPrecision();
+  TestSimpleDecode();
+  TripleSimpleDecode();
+  TripSimpleleEncodeDecode();
 
   Serial.print("# of tests failed: "); Serial.println(tests_failed);
   Serial.print("# of tests succeeded: "); Serial.println(tests_succeeded);
