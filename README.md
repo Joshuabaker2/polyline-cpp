@@ -1,5 +1,9 @@
 # polyline-cpp
-A polyline encoder/decoder for GPS coordinates. No dynamic memory allocation, so it's safe for embedded programming!
+A polyline encoder/decoder for GPS coordinates. No dynamic memory allocation, so it's safe for
+ embedded programming!
+
+I made this tool because I wanted a way to store GPS Coordinates on an embedded platform with very little available memory.
+My device also communicated with other devices over serial, so it was also easier to send a polyline string rather than a large list of coordinates.
 
 To see how polyline encoding/decoding works, check out Google's [Interactive Polyline Encoder Utility](https://developers.google.com/maps/documentation/utilities/polylineutility).
 ## How To Build
